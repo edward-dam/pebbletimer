@@ -11,7 +11,7 @@ var clay = new Clay(clayConfig);
 // libraries
 var UI       = require('pebblejs/ui');
 var Vector2  = require('pebblejs/lib/vector2');
-var ajax     = require('pebblejs/lib/ajax');
+//var ajax     = require('pebblejs/lib/ajax');
 var Settings = require('pebblejs/settings');
 
 // definitions
@@ -21,14 +21,15 @@ var size = new Vector2(windowSize.x, windowSize.y);
 //var icon = 'images/menu_icon.png';
 var backgroundColor = 'black';
 var highlightBackgroundColor = 'white';
-var textColor = 'white';
+//var textColor = 'white';
 var highlightTextColor = 'black';
 var textAlign = 'center';
+var fontXLarge = 'roboto-bold-subset-49';
 var fontLarge = 'gothic-28-bold';
 var fontMedium = 'gothic-24-bold';
 var fontSmall = 'gothic-18-bold';
 var fontXSmall = 'gothic-14-bold';
-var style = 'small';
+//var style = 'small';
 function position(height){
   return new Vector2(0, windowSize.y / 2 + height);
 }
@@ -37,8 +38,8 @@ function position(height){
 var mainWind = new UI.Window();
 var mainText = new UI.Text({size: size, backgroundColor: backgroundColor, textAlign: textAlign});
 var mainImage = new UI.Image({size: size});
-mainText.position(position(-70));
-mainImage.position(position(-65));
+mainText.position(position(-75));
+mainImage.position(position(-70));
 mainText.font(fontLarge);
 mainText.text('TIMER');
 mainImage.image('images/splash.png');
@@ -79,8 +80,98 @@ mainWind.on('click', 'down', function(e) {
 });
 
 // select button
-//mainWind.on('click', 'select', function(e) {
+mainWind.on('click', 'select', function(e) {
 
-//});
+  // load saved ip
+  var timerMins = Settings.data('timermins');
+  console.log('Loaded timermins: ' + timerMins);
+  if ( timerMins === undefined || timerMins === null ) {
+    timerMins = 1;
+  }
+    
+  // display timer screen
+  var timerWind = new UI.Window();
+  var timerHead = new UI.Text({size: size, backgroundColor: backgroundColor, textAlign: textAlign});
+  var timerText = new UI.Text({size: size, textAlign: textAlign,
+    color: highlightTextColor, backgroundColor: highlightBackgroundColor
+  });
+  var timerInfo = new UI.Text({size: size, backgroundColor: backgroundColor, textAlign: textAlign});
+  timerHead.position(position(-70));
+  timerText.position(position(-28));
+  timerInfo.position(position(+33));
+  timerHead.font(fontMedium);
+  timerText.font(fontSmall);
+  timerInfo.font(fontXSmall);
+  timerHead.text('Timer');
+  timerText.text('\nMinutes: ' + timerMins);
+  timerInfo.text('\n[ up / down ]');
+  timerWind.add(timerHead);
+  timerWind.add(timerText);
+  timerWind.add(timerInfo);
+  timerWind.show();
+  
+  // increase minutes click
+  timerWind.on('click', 'up', function() {
+    if ( timerMins >= 1 && timerMins < 60 ) {
+      adjustcountdown(+1, timerMins);
+    }
+  });
+  
+  // increase minutes long click
+  timerWind.on('longClick', 'up', function() {
+    if ( timerMins >= 1 && timerMins <= 50 ) {
+      adjustcountdown(+10, timerMins);     
+    }
+  });
+  
+  // decrease minutes click
+  timerWind.on('click', 'down', function() {
+    if ( timerMins > 1 && timerMins <= 60 ) {
+      adjustcountdown(-1, timerMins);
+    }
+  });
+  
+  // decrease minutes long click
+  timerWind.on('longClick', 'down', function() {
+    if ( timerMins > 10  && timerMins <= 60 ) {
+      adjustcountdown(-10, timerMins);
+    }
+  });
+  
+  // display timer
+  timerWind.on('click', 'select', function() {
+    
+    // save minutes
+    Settings.data('timermins', timerMins);
+    
+    // display timer
+    var countdownWind = new UI.Window();
+    var countdownHead = new UI.Text({size: size, backgroundColor: backgroundColor, textAlign: textAlign});
+    var countdownText = new UI.Text({size: size, textAlign: textAlign,
+      color: highlightTextColor, backgroundColor: highlightBackgroundColor
+    });
+    var countdownInfo = new UI.TimeText({size: size, backgroundColor: backgroundColor, textAlign: textAlign});
+    countdownHead.position(position(-70));
+    countdownText.position(position(-28));
+    countdownInfo.position(position(+33));
+    countdownHead.font(fontMedium);
+    countdownText.font(fontXLarge);
+    countdownInfo.font(fontXSmall);
+    countdownHead.text('Countdown');
+    countdownText.text('08:59');
+    countdownInfo.text('\nLocal Time: %H:%M');
+    countdownWind.add(countdownHead);
+    countdownWind.add(countdownText);
+    countdownWind.add(countdownInfo);
+    countdownWind.show();
+    
+  });
 
-// functions
+  // function adjust countdown
+  function adjustcountdown(amount, minutes) {
+    timerMins = minutes + amount;
+    timerText.text('\nMinutes: ' + timerMins);
+    timerWind.add(timerText);
+    timerWind.add(timerInfo);
+  }
+});
