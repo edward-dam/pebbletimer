@@ -11,8 +11,9 @@ var clay = new Clay(clayConfig);
 // libraries
 var UI       = require('pebblejs/ui');
 var Vector2  = require('pebblejs/lib/vector2');
-//var ajax     = require('pebblejs/lib/ajax');
+//var ajax   = require('pebblejs/lib/ajax');
 var Settings = require('pebblejs/settings');
+var Vibe     = require('pebblejs/ui/vibe');
 
 // definitions
 var window = new UI.Window();
@@ -109,6 +110,7 @@ mainWind.on('click', 'select', function(e) {
   timerWind.add(timerText);
   timerWind.add(timerInfo);
   timerWind.show();
+  mainWind.hide();
   
   // increase minutes click
   timerWind.on('click', 'up', function() {
@@ -155,16 +157,36 @@ mainWind.on('click', 'select', function(e) {
     countdownText.position(position(-28));
     countdownInfo.position(position(+33));
     countdownHead.font(fontMedium);
-    countdownText.font(fontXLarge);
+    countdownText.font(fontSmall);
     countdownInfo.font(fontXSmall);
     countdownHead.text('Countdown');
-    countdownText.text('08:59');
+    countdownText.text('\nREADY...');
     countdownInfo.text('\nLocal Time: %H:%M');
     countdownWind.add(countdownHead);
     countdownWind.add(countdownText);
     countdownWind.add(countdownInfo);
     countdownWind.show();
+    timerWind.hide();
     
+    // countdown
+    var duration = 60 * timerMins;
+    var timer = duration, minutes, seconds;
+    var countdown = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      console.log(minutes + ":" + seconds);
+      countdownText.font(fontXLarge);
+      countdownText.text(minutes + ":" + seconds);
+      countdownWind.add(countdownText);
+      countdownWind.add(countdownInfo);
+      if (--timer < 0) {
+        clearInterval(countdown);
+        Vibe.vibrate('long');
+      }
+    }, 1000);
+  
   });
 
   // function adjust countdown
