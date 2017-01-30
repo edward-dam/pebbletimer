@@ -73,7 +73,7 @@ mainWind.on('click', 'down', function(e) {
   downText.position(position(-5));
   downHead.font(fontMedium);
   downText.font(fontSmall);
-  downHead.text('Timer v1.0');
+  downHead.text('Timer v1.1');
   downText.text('by Edward Dam');
   downWind.add(downHead);
   downWind.add(downText);
@@ -85,7 +85,7 @@ mainWind.on('click', 'select', function(e) {
 
   // load saved ip
   var timerMins = Settings.data('timermins');
-  console.log('Loaded timermins: ' + timerMins);
+  //console.log('Loaded timermins: ' + timerMins);
   if ( timerMins === undefined || timerMins === null ) {
     timerMins = 1;
   }
@@ -176,7 +176,7 @@ mainWind.on('click', 'select', function(e) {
       seconds = parseInt(timer % 60, 10);
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-      console.log(minutes + ":" + seconds);
+      //console.log(minutes + ":" + seconds);
       countdownText.font(fontXLarge);
       countdownText.text(minutes + ":" + seconds);
       countdownWind.add(countdownText);
