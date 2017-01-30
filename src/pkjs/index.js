@@ -169,6 +169,7 @@ mainWind.on('click', 'select', function(e) {
     timerWind.hide();
     
     // countdown
+    Vibe.vibrate('short');
     var duration = 60 * timerMins;
     var timer = duration, minutes, seconds;
     var countdown = setInterval(function () {
