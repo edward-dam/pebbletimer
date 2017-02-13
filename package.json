@@ -5,12 +5,12 @@
         "pebblejs": "^1.0.0"
     },
     "keywords": [],
-    "name": "timer-v1.1",
+    "name": "timer-v1.2",
     "pebble": {
         "capabilities": [
             "configurable"
         ],
-        "displayName": "Timer v1.1",
+        "displayName": "Timer v1.2",
         "enableMultiJS": true,
         "messageKeys": [
             "message_keys"
@@ -55,5 +55,5 @@
             "watchface": false
         }
     },
-    "version": "1.10.0"
+    "version": "1.20.0"
 }

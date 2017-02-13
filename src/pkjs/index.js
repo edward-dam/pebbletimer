@@ -73,7 +73,7 @@ mainWind.on('click', 'down', function(e) {
   downText.position(position(-5));
   downHead.font(fontMedium);
   downText.font(fontSmall);
-  downHead.text('Timer v1.1');
+  downHead.text('Timer v1.2');
   downText.text('by Edward Dam');
   downWind.add(downHead);
   downWind.add(downText);
@@ -166,7 +166,7 @@ mainWind.on('click', 'select', function(e) {
     countdownWind.add(countdownText);
     countdownWind.add(countdownInfo);
     countdownWind.show();
-    timerWind.hide();
+    //timerWind.hide();
     
     // countdown
     Vibe.vibrate('short');

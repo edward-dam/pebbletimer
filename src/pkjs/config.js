@@ -3,7 +3,7 @@
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "Timer v1.1"
+    "defaultValue": "Timer v1.2"
   },
   {
     "type": "text",
