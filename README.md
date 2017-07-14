@@ -16,7 +16,7 @@
 
 ### app store
 
-https://apps.getpebble.com/applications/5883aafe95ce5b40d3000269
+https://apps.getpebble.com/en_US/application/5883aafe95ce5b40d3000269
 
 ### description
 Simple and easy to use countdown timer.
